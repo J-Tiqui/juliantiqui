@@ -7,11 +7,11 @@ const readings = [
 export function SignalPanel() {
   return (
     <div
-      className="signal-panel relative mx-auto w-full max-w-[470px] overflow-hidden rounded-[24px] border border-white/10 bg-[#0b0b0d]/88 p-5 shadow-[0_40px_100px_rgba(0,0,0,0.55)] sm:p-7"
+      className="relative mx-auto w-full max-w-[470px] overflow-hidden rounded-[24px] border border-white/10 bg-[#0b0b0d]/88 p-5 shadow-[0_40px_100px_rgba(0,0,0,0.55)] sm:p-7"
       aria-label="Focus area visualization"
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_84%_8%,rgba(255,87,49,0.12),transparent_30%)]" />
-      <div className="signal-scan absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-transparent via-white/[0.025] to-transparent" />
+      <div className="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-transparent via-white/[0.025] to-transparent" />
       <div className="relative">
         <div className="flex items-start justify-between">
           <div>
@@ -29,7 +29,7 @@ export function SignalPanel() {
         </div>
 
         <div className="relative my-10 flex h-[180px] items-center justify-center">
-          <div className="signal-ring absolute h-[176px] w-[176px] rounded-full border border-white/8" />
+          <div className="absolute h-[176px] w-[176px] animate-spin rounded-full bg-[conic-gradient(from_218deg,rgba(255,90,55,0.95)_0deg,rgba(255,148,83,0.4)_76deg,rgba(255,255,255,0.08)_78deg,rgba(255,255,255,0.02)_230deg,rgba(255,81,47,0.5)_312deg,rgba(255,90,55,0.95)_360deg)] p-px [animation-duration:24s] [mask-composite:exclude] [mask:linear-gradient(#000_0_0)_content-box,linear-gradient(#000_0_0)]" />
           <div className="absolute h-[132px] w-[132px] rounded-full border border-dashed border-white/10" />
           <div className="absolute h-[86px] w-[86px] rounded-full border border-[#ff5e3b]/24 bg-[#ff5e3b]/[0.035] shadow-[inset_0_0_35px_rgba(255,74,43,0.08),0_0_40px_rgba(255,74,43,0.05)]" />
           <div className="text-center">

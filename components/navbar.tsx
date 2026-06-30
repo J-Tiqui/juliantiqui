@@ -1,4 +1,5 @@
 import { ArrowIcon } from "@/components/icons";
+import { shellClass, wordmarkClass } from "@/components/ui-styles";
 
 const navLinks = [
   { label: "About", href: "#about" },
@@ -9,37 +10,44 @@ const navLinks = [
 
 export function Navbar() {
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-white/8 bg-[#070708]/78 backdrop-blur-xl">
-      <nav
-        aria-label="Primary navigation"
-        className="shell flex h-[72px] items-center justify-between"
-      >
-        <a
-          className="wordmark text-white transition hover:text-white/72"
-          href="#home"
-          aria-label="juliantiqui, home"
+    <header className="pointer-events-none fixed inset-x-0 top-3 z-50 sm:top-4">
+      <div className={shellClass}>
+        <nav
+          aria-label="Primary navigation"
+          className="pointer-events-auto flex h-14 items-center justify-between rounded-full border border-white/[0.13] bg-[#09090b]/72 px-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_18px_55px_rgba(0,0,0,0.38)] backdrop-blur-2xl sm:h-16 sm:px-5"
         >
-          juliantiqui<span className="text-[#ff603e]">.</span>
-        </a>
+          <a
+            className={`${wordmarkClass} text-white transition hover:text-white/72`}
+            href="#home"
+            aria-label="juliantiqui, home"
+          >
+            juliantiqui<span className="text-[#ff603e]">.</span>
+          </a>
 
-        <div className="hidden items-center gap-8 md:flex">
-          {navLinks.map((link) => (
-            <a className="nav-link" href={link.href} key={link.href}>
-              {link.label}
-            </a>
-          ))}
-        </div>
+          <div className="hidden items-center gap-1 rounded-full border border-white/[0.08] bg-black/20 p-1 md:flex">
+            {navLinks.map((link) => (
+              <a
+                className="rounded-full px-4 py-2 text-[11px] font-medium text-white/58 transition hover:bg-white/[0.07] hover:text-white"
+                href={link.href}
+                key={link.href}
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
 
-        <a
-          className="group flex items-center gap-2 text-xs font-medium text-white/75 transition hover:text-white"
-          href="#contact"
-        >
-          <span className="hidden sm:inline">Let&apos;s talk</span>
-          <span className="grid h-8 w-8 place-items-center rounded-full border border-white/12 bg-white/[0.035] transition group-hover:border-[#ff603e]/50 group-hover:bg-[#ff603e]/10 group-hover:text-[#ff795a]">
-            <ArrowIcon className="h-3.5 w-3.5" />
-          </span>
-        </a>
-      </nav>
+          <a
+            aria-label="Contact"
+            className="group flex items-center gap-2 rounded-full pl-3 text-xs font-medium text-white/75 transition hover:bg-white/[0.04] hover:text-white"
+            href="#contact"
+          >
+            <span className="hidden sm:inline">Let&apos;s talk</span>
+            <span className="grid h-9 w-9 place-items-center rounded-full border border-[#ff7a52]/30 bg-[#ff603e]/10 text-[#ff9a78] shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] transition group-hover:border-[#ff8768]/60 group-hover:bg-[#ff603e]/20 group-hover:text-white">
+              <ArrowIcon className="h-3.5 w-3.5" />
+            </span>
+          </a>
+        </nav>
+      </div>
     </header>
   );
 }

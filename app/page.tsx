@@ -1,8 +1,19 @@
 import Image from "next/image";
 
+import { GlassCard } from "@/components/glass-card";
 import { ArrowIcon, DownloadIcon, LocationIcon } from "@/components/icons";
 import { Navbar } from "@/components/navbar";
 import { SectionHeading } from "@/components/section-heading";
+import {
+  eyebrowClass,
+  largeTagClass,
+  primaryButtonClass,
+  secondaryButtonClass,
+  sectionPadClass,
+  shellClass,
+  tagClass,
+  wordmarkClass,
+} from "@/components/ui-styles";
 import {
   experiences,
   focusAreas,
@@ -13,44 +24,50 @@ import {
 
 function ExperienceTimeline() {
   return (
-    <div className="relative border-l border-white/10">
+    <div className="grid gap-4">
       {experiences.map((experience, index) => (
-        <article
+        <GlassCard
           key={`${experience.role}-${experience.company}`}
-          className="group relative grid gap-5 border-b border-white/8 py-8 pl-7 first:pt-1 last:border-b-0 sm:grid-cols-[0.42fr_1fr] sm:gap-10 sm:pl-10"
+          className="group rounded-[22px]"
+          contentClassName="p-6 sm:p-8"
+          interactive
         >
-          <span
-            className={`absolute -left-[4.5px] h-2 w-2 rounded-full border border-[#ff603c] bg-[#0a0a0b] shadow-[0_0_0_5px_rgba(255,81,47,0.06)] transition group-hover:bg-[#ff603c] group-hover:shadow-[0_0_18px_rgba(255,81,47,0.65)] ${
-              index === 0 ? "top-2" : "top-10"
-            }`}
-            aria-hidden="true"
-          />
-          <div>
-            <p className="eyebrow">{experience.kind}</p>
-            <h3 className="mt-2 text-lg font-medium tracking-[-0.02em] text-white">
-              {experience.company}
-            </h3>
-            <p className="mt-1 text-sm text-white/45">{experience.scope}</p>
-          </div>
-          <div>
-            <p className="text-xl font-medium tracking-[-0.025em] text-white sm:text-2xl">
-              {experience.role}
-            </p>
-            <p className="mt-3 max-w-2xl text-[15px] leading-7 text-white/52">
-              {experience.description}
-            </p>
-            <div className="mt-5 flex flex-wrap gap-2">
-              {experience.tools.map((tool) => (
-                <span className="tag" key={tool}>
-                  {tool}
-                </span>
-              ))}
+          <article className="relative grid gap-6 sm:grid-cols-[0.38fr_1fr] sm:gap-10">
+            <div>
+              <div className="flex items-center gap-3">
+                <span
+                  className="h-2 w-2 rounded-full bg-[#ff6542] shadow-[0_0_14px_rgba(255,94,58,0.7)]"
+                  aria-hidden="true"
+                />
+                <p className={`${eyebrowClass} text-[#ffb077]`}>
+                  {experience.kind}
+                </p>
+              </div>
+              <h3 className="mt-3 text-lg font-medium tracking-[-0.02em] text-white">
+                {experience.company}
+              </h3>
+              <p className="mt-1 text-sm text-white/55">{experience.scope}</p>
             </div>
-          </div>
-          <span className="absolute right-0 top-7 font-mono text-[11px] text-white/18">
-            0{index + 1}
-          </span>
-        </article>
+            <div>
+              <p className="pr-8 text-xl font-medium tracking-[-0.025em] text-white sm:text-2xl">
+                {experience.role}
+              </p>
+              <p className="mt-3 max-w-2xl text-[15px] leading-7 text-white/62">
+                {experience.description}
+              </p>
+              <div className="mt-5 flex flex-wrap gap-2">
+                {experience.tools.map((tool) => (
+                  <span className={tagClass} key={tool}>
+                    {tool}
+                  </span>
+                ))}
+              </div>
+            </div>
+            <span className="absolute right-0 top-0 font-mono text-[10px] text-white/28">
+              0{index + 1}
+            </span>
+          </article>
+        </GlassCard>
       ))}
     </div>
   );
@@ -64,57 +81,59 @@ function ProjectCard({
   index: number;
 }) {
   return (
-    <article
-      className={`project-card group relative flex min-h-[310px] flex-col overflow-hidden rounded-[20px] border border-white/9 bg-[#0e0e10] p-6 transition duration-500 hover:-translate-y-1 hover:border-white/18 sm:p-7 ${
+    <GlassCard
+      className={`group rounded-[24px] ${
         project.featured ? "md:col-span-2 md:min-h-[370px]" : ""
       }`}
+      contentClassName={`flex min-h-[310px] flex-col p-6 sm:p-7 ${
+        project.featured ? "md:min-h-[370px]" : ""
+      }`}
+      interactive
     >
-      <div
-        className={`absolute inset-x-0 top-0 h-px bg-gradient-to-r ${project.accent}`}
-        aria-hidden="true"
-      />
-      <div className="flex items-center justify-between">
-        <span className="font-mono text-[10px] tracking-[0.18em] text-white/32">
-          PROJECT / 0{index + 1}
-        </span>
-        <span className="grid h-9 w-9 place-items-center rounded-full border border-white/9 text-white/45 transition duration-300 group-hover:border-[#ff603c]/35 group-hover:bg-[#ff603c]/10 group-hover:text-[#ff765b]">
-          <ArrowIcon />
-        </span>
-      </div>
-
-      <div className="mt-auto pt-20">
-        {project.featured && (
-          <p className="mb-4 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.16em] text-[#ffaf66]">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#ff633e] shadow-[0_0_10px_#ff633e]" />
-            Flagship system
-          </p>
-        )}
-        <h3
-          className={`max-w-xl font-medium tracking-[-0.035em] text-white ${
-            project.featured ? "text-3xl sm:text-4xl" : "text-2xl"
-          }`}
-        >
-          {project.title}
-        </h3>
-        <p className="mt-4 max-w-2xl text-[15px] leading-7 text-white/50">
-          {project.description}
-        </p>
-        <div className="mt-6 flex flex-wrap gap-x-4 gap-y-2">
-          {project.stack.map((item) => (
-            <span
-              className="font-mono text-[10px] uppercase tracking-[0.12em] text-white/30"
-              key={item}
-            >
-              {item}
-            </span>
-          ))}
+      <article className="flex flex-1 flex-col">
+        <div
+          className={`absolute inset-x-0 top-0 h-px bg-gradient-to-r ${project.accent}`}
+          aria-hidden="true"
+        />
+        <div className="flex items-center justify-between">
+          <span className="font-mono text-[10px] tracking-[0.18em] text-white/42">
+            PROJECT / 0{index + 1}
+          </span>
+          <span className="grid h-9 w-9 place-items-center rounded-full border border-white/[0.12] bg-white/[0.035] text-white/55 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)] transition duration-300 group-hover:border-[#ff603c]/45 group-hover:bg-[#ff603c]/12 group-hover:text-[#ff9b7e]">
+            <ArrowIcon />
+          </span>
         </div>
-      </div>
-      <div
-        className="absolute -right-20 -top-20 h-56 w-56 rounded-full bg-[#ff4f30]/0 blur-3xl transition duration-700 group-hover:bg-[#ff4f30]/8"
-        aria-hidden="true"
-      />
-    </article>
+
+        <div className="mt-auto pt-20">
+          {project.featured && (
+            <p className="mb-4 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.16em] text-[#ffbd86]">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#ff633e] shadow-[0_0_10px_#ff633e]" />
+              Flagship system
+            </p>
+          )}
+          <h3
+            className={`max-w-xl font-medium tracking-[-0.035em] text-white ${
+              project.featured ? "text-3xl sm:text-4xl" : "text-2xl"
+            }`}
+          >
+            {project.title}
+          </h3>
+          <p className="mt-4 max-w-2xl text-[15px] leading-7 text-white/62">
+            {project.description}
+          </p>
+          <div className="mt-6 flex flex-wrap gap-x-4 gap-y-2">
+            {project.stack.map((item) => (
+              <span
+                className="font-mono text-[10px] uppercase tracking-[0.12em] text-white/42"
+                key={item}
+              >
+                {item}
+              </span>
+            ))}
+          </div>
+        </div>
+      </article>
+    </GlassCard>
   );
 }
 
@@ -132,7 +151,7 @@ export default function Home() {
       <main id="main-content" className="overflow-hidden">
         <section
           id="home"
-          className="relative flex min-h-[calc(100svh-72px)] items-center overflow-hidden border-b border-white/8 pb-20 pt-28 sm:pt-32"
+          className="relative flex min-h-svh items-center overflow-hidden border-b border-white/8 pb-20 pt-24 sm:pt-28"
         >
           <Image
             src="/images/mustang-hero.jpg"
@@ -140,100 +159,118 @@ export default function Home() {
             fill
             preload
             sizes="100vw"
-            className="object-cover object-[58%_center] contrast-[1.08] saturate-[0.82] sm:object-[60%_center] lg:object-center"
+            className="object-cover object-[62%_center] contrast-[1.04] saturate-[0.78] sm:object-[60%_center] lg:object-center"
             aria-hidden="true"
           />
           <div
-            className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,6,0.72)_0%,rgba(5,5,6,0.26)_34%,rgba(5,5,6,0.58)_72%,#070708_100%)]"
+            className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,6,0.55)_0%,rgba(5,5,6,0.14)_35%,rgba(5,5,6,0.48)_72%,#070708_100%)]"
             aria-hidden="true"
           />
           <div
-            className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,5,6,0.96)_0%,rgba(5,5,6,0.88)_28%,rgba(5,5,6,0.56)_52%,rgba(5,5,6,0.2)_78%,rgba(5,5,6,0.3)_100%)]"
+            className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,5,6,0.78)_0%,rgba(5,5,6,0.48)_44%,rgba(5,5,6,0.12)_78%,rgba(5,5,6,0.28)_100%)]"
             aria-hidden="true"
           />
-          <div className="hero-grid absolute inset-0 opacity-20" aria-hidden="true" />
+          <div
+            className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.026)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.026)_1px,transparent_1px)] opacity-20 [background-size:70px_70px] [mask-image:linear-gradient(to_bottom,black,transparent_92%)]"
+            aria-hidden="true"
+          />
           <div
             className="absolute -left-20 top-20 h-[440px] w-[440px] rounded-full bg-[#e94729]/10 blur-[130px]"
             aria-hidden="true"
           />
-          <div className="shell relative z-10 w-full">
-            <div className="max-w-[900px]">
+          <div className={`${shellClass} relative z-10`}>
+            <GlassCard
+              className="max-w-[780px] rounded-[26px] sm:rounded-[32px]"
+              contentClassName="px-6 py-7 sm:px-10 sm:py-10 lg:px-12 lg:py-11"
+            >
               <div className="flex items-center gap-3">
                 <span className="h-px w-8 bg-[#ff5e3b]" />
-                <p className="eyebrow text-white/64">
+                <p className={`${eyebrowClass} text-white/70`}>
                   Julian Tiqui · AI / Autonomy / Engineering
                 </p>
               </div>
 
-              <h1 className="hero-title mt-8 max-w-[820px] text-[clamp(3.6rem,8.4vw,7.4rem)] font-semibold leading-[0.86] tracking-[-0.075em] text-white">
+              <h1 className="mt-7 max-w-[720px] text-balance text-[clamp(2.45rem,7.4vw,6.4rem)] font-semibold leading-[0.9] tracking-[-0.065em] text-white sm:leading-[0.88] sm:tracking-[-0.07em]">
                 Building systems
-                <span className="mt-2 block text-white/48">with intelligence.</span>
+                <span className="mt-2 block bg-gradient-to-r from-white/85 via-white/58 to-[#ffad72]/72 bg-clip-text text-transparent">
+                  with intelligence.
+                </span>
               </h1>
 
-              <p className="mt-8 max-w-xl text-base leading-7 text-white/68 sm:text-lg sm:leading-8">
+              <p className="mt-7 max-w-xl text-base leading-7 text-white/72 sm:text-lg sm:leading-8">
                 AI Automation Analyst and Computer Engineering student creating
                 practical agents, autonomous robotics, and software systems that
                 move complex work forward.
               </p>
 
               <div className="mt-10 flex flex-wrap items-center gap-3">
-                <a href="#projects" className="button-primary">
+                <a href="#projects" className={primaryButtonClass}>
                   Explore my work
                   <ArrowIcon />
                 </a>
-                <a href="#about" className="button-secondary">
+                <a href="#about" className={secondaryButtonClass}>
                   More about me
                   <span aria-hidden="true">↓</span>
                 </a>
               </div>
-            </div>
+            </GlassCard>
           </div>
-          <div className="shell absolute inset-x-0 bottom-7 z-10 hidden items-end justify-between sm:flex">
-            <p className="font-mono text-[9px] uppercase leading-5 tracking-[0.17em] text-white/24">
+          <div
+            className={`${shellClass} absolute inset-x-0 bottom-7 z-10 hidden items-end justify-between sm:flex`}
+          >
+            <p className="font-mono text-[9px] uppercase leading-5 tracking-[0.17em] text-white/42">
               Scroll to inspect
               <br />
               Selected work / 2026
             </p>
-            <div className="flex items-center gap-3 font-mono text-[9px] uppercase tracking-[0.17em] text-white/24">
+            <div className="flex items-center gap-3 font-mono text-[9px] uppercase tracking-[0.17em] text-white/42">
               <span>Signal / Active</span>
               <span className="h-1.5 w-1.5 rounded-full bg-[#ff5938] shadow-[0_0_10px_#ff5938]" />
             </div>
           </div>
         </section>
 
-        <section id="about" className="section-pad scroll-mt-24">
-          <div className="shell">
+        <section
+          id="about"
+          className={`${sectionPadClass} relative scroll-mt-24 before:absolute before:left-[-10rem] before:top-1/3 before:h-80 before:w-80 before:rounded-full before:bg-[#ff633b]/[0.035] before:blur-[100px]`}
+        >
+          <div className={shellClass}>
             <SectionHeading
               index="01"
               label="About"
               title="I work where software meets the real world."
             />
             <div className="mt-14 grid gap-12 lg:grid-cols-[0.86fr_1.14fr] lg:gap-24">
-              <div className="surface-card relative min-h-[320px] overflow-hidden rounded-[20px] p-7 sm:p-9">
-                <div className="absolute right-7 top-7 font-mono text-[9px] uppercase tracking-[0.18em] text-white/25">
-                  Profile / JT
+              <GlassCard
+                className="min-h-[320px] rounded-[24px]"
+                contentClassName="flex min-h-[320px] flex-col justify-between p-7 sm:p-9"
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <p className="max-w-sm text-2xl font-medium leading-[1.35] tracking-[-0.03em] text-white sm:text-3xl">
+                    Technical depth.
+                    <br />
+                    <span className="text-white/48">Practical outcomes.</span>
+                  </p>
+                  <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-white/50">
+                    Profile / JT
+                  </span>
                 </div>
-                <p className="max-w-sm text-2xl font-medium leading-[1.35] tracking-[-0.03em] text-white sm:text-3xl">
-                  Technical depth.
-                  <br />
-                  <span className="text-white/34">Practical outcomes.</span>
-                </p>
-                <div className="absolute bottom-8 left-7 right-7 sm:left-9 sm:right-9">
-                  <div className="mb-5 h-px bg-gradient-to-r from-[#ff5432]/70 via-white/10 to-transparent" />
-                  <p className="flex items-center gap-2 text-sm text-white/42">
+                <div>
+                  <div className="mb-5 h-px bg-gradient-to-r from-[#ff643f]/80 via-[#ffad6f]/35 to-transparent" />
+                  <p className="flex items-center gap-2 text-sm text-white/58">
                     <LocationIcon />
                     Queen&apos;s University · Computer Engineering
                   </p>
                 </div>
-              </div>
+              </GlassCard>
 
               <div>
-                <p className="max-w-3xl text-xl leading-9 tracking-[-0.015em] text-white/76 sm:text-2xl sm:leading-10">
+                <p className="max-w-3xl text-xl leading-9 tracking-[-0.015em] text-white/82 sm:text-2xl sm:leading-10">
                   I&apos;m Julian — an engineer and analyst interested in how
                   intelligent systems can make teams faster, machines more
                   capable, and information easier to act on.
                 </p>
-                <p className="mt-6 max-w-2xl text-[15px] leading-7 text-white/46">
+                <p className="mt-6 max-w-2xl text-[15px] leading-7 text-white/60">
                   From enterprise automation to autonomous surface vessels, I
                   like turning ambiguous problems into systems that are clear,
                   reliable, and useful. My work spans the full path from
@@ -241,7 +278,7 @@ export default function Home() {
                 </p>
                 <div className="mt-9 flex flex-wrap gap-2">
                   {focusAreas.map((area) => (
-                    <span className="tag tag-large" key={area}>
+                    <span className={largeTagClass} key={area}>
                       {area}
                     </span>
                   ))}
@@ -253,9 +290,9 @@ export default function Home() {
 
         <section
           id="experience"
-          className="section-pad scroll-mt-24 border-y border-white/8 bg-white/[0.012]"
+          className={`${sectionPadClass} scroll-mt-24 border-y border-white/[0.07] bg-[radial-gradient(circle_at_85%_20%,rgba(255,99,59,0.045),transparent_28%)]`}
         >
-          <div className="shell">
+          <div className={shellClass}>
             <SectionHeading
               index="02"
               label="Experience"
@@ -267,8 +304,11 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="projects" className="section-pad scroll-mt-24">
-          <div className="shell">
+        <section
+          id="projects"
+          className={`${sectionPadClass} scroll-mt-24`}
+        >
+          <div className={shellClass}>
             <SectionHeading
               index="03"
               label="Featured projects"
@@ -285,148 +325,177 @@ export default function Home() {
 
         <section
           id="skills"
-          className="section-pad scroll-mt-24 border-y border-white/8 bg-[#09090a]"
+          className={`${sectionPadClass} scroll-mt-24 border-y border-white/[0.07] bg-[#09090a]`}
         >
-          <div className="shell">
+          <div className={shellClass}>
             <SectionHeading
               index="04"
               label="Capabilities"
               title="A toolkit built for connected systems."
             />
-            <div className="mt-14 grid border-l border-t border-white/8 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {skillGroups.map((group, index) => (
-                <article
-                  className="group min-h-[235px] border-b border-r border-white/8 p-6 transition duration-300 hover:bg-white/[0.025] sm:p-8"
+                <GlassCard
+                  className="group min-h-[235px] rounded-[22px]"
+                  contentClassName="p-6 sm:p-8"
+                  interactive
                   key={group.title}
                 >
-                  <div className="flex items-center justify-between">
-                    <span className="font-mono text-[10px] text-[#ff7658]">
-                      0{index + 1}
-                    </span>
-                    <span className="h-1.5 w-1.5 rounded-full bg-white/12 transition group-hover:bg-[#ff6544] group-hover:shadow-[0_0_9px_#ff6544]" />
-                  </div>
-                  <h3 className="mt-10 text-xl font-medium tracking-[-0.025em] text-white">
-                    {group.title}
-                  </h3>
-                  <ul className="mt-5 space-y-2">
-                    {group.items.map((item) => (
-                      <li className="text-sm text-white/43" key={item}>
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </article>
+                  <article>
+                    <div className="flex items-center justify-between">
+                      <span className="font-mono text-[10px] text-[#ff9b77]">
+                        0{index + 1}
+                      </span>
+                      <span className="h-1.5 w-1.5 rounded-full bg-white/20 transition group-hover:bg-[#ff6544] group-hover:shadow-[0_0_9px_#ff6544]" />
+                    </div>
+                    <h3 className="mt-10 text-xl font-medium tracking-[-0.025em] text-white">
+                      {group.title}
+                    </h3>
+                    <ul className="mt-5 space-y-2">
+                      {group.items.map((item) => (
+                        <li className="text-sm text-white/58" key={item}>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </article>
+                </GlassCard>
               ))}
-              <div className="relative min-h-[235px] overflow-hidden border-b border-r border-white/8 p-8">
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_25%,rgba(255,82,45,0.11),transparent_38%)]" />
-                <div className="relative flex h-full flex-col justify-between">
-                  <p className="eyebrow">Always learning</p>
-                  <p className="max-w-[250px] text-lg leading-7 tracking-[-0.02em] text-white/60">
+              <GlassCard
+                className="min-h-[235px] rounded-[22px]"
+                contentClassName="flex min-h-[235px] flex-col justify-between p-8"
+              >
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_25%,rgba(255,126,62,0.11),transparent_38%)]" />
+                <div className="relative flex flex-1 flex-col justify-between">
+                  <p className={eyebrowClass}>Always learning</p>
+                  <p className="max-w-[250px] text-lg leading-7 tracking-[-0.02em] text-white/70">
                     Currently exploring better ways to make agents dependable,
                     observable, and genuinely useful.
                   </p>
                 </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section id="resume" className="section-pad scroll-mt-24">
-          <div className="shell">
-            <div className="resume-panel relative overflow-hidden rounded-[24px] border border-white/10 px-6 py-12 sm:px-12 sm:py-16 lg:px-16">
-              <div className="relative grid items-end gap-10 lg:grid-cols-[1fr_auto]">
-                <div>
-                  <p className="eyebrow text-[#ff8a65]">Résumé / Snapshot</p>
-                  <h2 className="mt-5 max-w-3xl text-4xl font-medium leading-[1.06] tracking-[-0.05em] text-white sm:text-6xl">
-                    The complete story,
-                    <span className="text-white/30"> one page.</span>
-                  </h2>
-                  <p className="mt-6 max-w-xl text-[15px] leading-7 text-white/46">
-                    A concise view of my engineering experience, technical
-                    projects, and education. PDF download will be added shortly.
-                  </p>
-                </div>
-                <button
-                  className="button-primary cursor-not-allowed opacity-55"
-                  type="button"
-                  disabled
-                  title="Résumé PDF coming soon"
-                >
-                  <DownloadIcon />
-                  Download résumé
-                  <span className="ml-1 font-mono text-[8px] uppercase tracking-[0.14em]">
-                    Soon
-                  </span>
-                </button>
-              </div>
+              </GlassCard>
             </div>
           </div>
         </section>
 
         <section
-          id="updates"
-          className="section-pad scroll-mt-24 border-t border-white/8"
+          id="resume"
+          className={`${sectionPadClass} scroll-mt-24`}
         >
-          <div className="shell">
+          <div className={shellClass}>
+            <GlassCard
+              className="rounded-[28px] after:bg-[#ff813f]/[0.11]"
+              contentClassName="px-6 py-12 sm:px-12 sm:py-16 lg:px-16"
+            >
+              <div className="grid items-end gap-10 lg:grid-cols-[1fr_auto]">
+                <div>
+                  <p className={`${eyebrowClass} text-[#ffac7e]`}>
+                    Résumé / Snapshot
+                  </p>
+                  <h2 className="mt-5 max-w-3xl text-4xl font-medium leading-[1.06] tracking-[-0.05em] text-white sm:text-6xl">
+                    The complete story,
+                    <span className="text-white/46"> one page.</span>
+                  </h2>
+                  <p className="mt-6 max-w-xl text-[15px] leading-7 text-white/62">
+                    A concise view of my engineering experience, technical
+                    projects, and education—ready whenever you need the details.
+                  </p>
+                </div>
+                <a
+                  className={primaryButtonClass}
+                  href="/Julian_Tiqui_Resume.pdf"
+                  download
+                >
+                  <DownloadIcon />
+                  Download résumé
+                </a>
+              </div>
+            </GlassCard>
+          </div>
+        </section>
+
+        <section
+          id="updates"
+          className={`${sectionPadClass} scroll-mt-24 border-t border-white/8`}
+        >
+          <div className={shellClass}>
             <SectionHeading
               index="05"
               label="Selected updates"
               title="What I'm focused on now."
             />
-            <div className="mt-14 divide-y divide-white/8 border-y border-white/8">
+            <GlassCard
+              className="mt-14 rounded-[24px]"
+              contentClassName="divide-y divide-white/[0.08]"
+            >
               {updates.map((update, index) => (
                 <a
                   href={update.href}
-                  className="group grid gap-5 py-7 transition hover:bg-white/[0.018] sm:grid-cols-[0.16fr_0.55fr_1fr_auto] sm:items-center sm:px-4"
+                  className="group grid gap-4 px-6 py-6 transition hover:bg-white/[0.035] sm:grid-cols-[0.16fr_0.55fr_1fr_auto] sm:items-center sm:px-8"
                   key={update.title}
                 >
-                  <span className="font-mono text-[10px] tracking-[0.14em] text-white/24">
+                  <span className="font-mono text-[10px] tracking-[0.14em] text-white/50">
                     0{index + 1}
                   </span>
-                  <span className="eyebrow text-white/38">{update.category}</span>
-                  <span className="text-base text-white/70 transition group-hover:text-white">
+                  <span className={`${eyebrowClass} text-[#ff9c74]`}>
+                    {update.category}
+                  </span>
+                  <span className="text-base text-white/74 transition group-hover:text-white">
                     {update.title}
                   </span>
-                  <span className="text-white/28 transition group-hover:translate-x-1 group-hover:text-[#ff7658]">
+                  <span className="text-white/42 transition group-hover:translate-x-1 group-hover:text-[#ff9272]">
                     <ArrowIcon />
                   </span>
                 </a>
               ))}
-            </div>
+            </GlassCard>
           </div>
         </section>
       </main>
 
-      <footer id="contact" className="scroll-mt-24 border-t border-white/8">
-        <div className="shell pb-8 pt-20 sm:pt-28">
-          <p className="eyebrow text-[#ff7959]">Contact / Open channel</p>
-          <div className="mt-6 flex flex-col items-start justify-between gap-10 border-b border-white/10 pb-16 lg:flex-row lg:items-end">
-            <h2 className="max-w-4xl text-[clamp(3.2rem,8vw,7.2rem)] font-semibold leading-[0.87] tracking-[-0.07em] text-white">
-              Let&apos;s build
-              <br />
-              <span className="text-white/26">what&apos;s next.</span>
-            </h2>
-            <a href="#home" className="button-secondary shrink-0">
-              Back to top
-              <span aria-hidden="true">↑</span>
-            </a>
-          </div>
-          <div className="flex flex-col gap-5 pt-7 text-sm text-white/34 sm:flex-row sm:items-center sm:justify-between">
-            <a
-              className="wordmark w-fit text-white/70 transition hover:text-white"
-              href="#home"
-              aria-label="juliantiqui, back to home"
-            >
-              juliantiqui<span className="text-[#ff633f]">.</span>
-            </a>
-            <p>
-              Open to conversations about AI, autonomy, and engineering · Contact
-              links coming soon
+      <footer
+        id="contact"
+        className="scroll-mt-24 border-t border-white/[0.07] bg-[radial-gradient(circle_at_50%_100%,rgba(255,91,47,0.07),transparent_36%)]"
+      >
+        <div className={`${shellClass} pb-8 pt-20 sm:pt-28`}>
+          <GlassCard
+            className="rounded-[28px]"
+            contentClassName="px-6 py-10 sm:px-10 sm:py-12 lg:px-14 lg:py-14"
+          >
+            <p className={`${eyebrowClass} text-[#ff9f79]`}>
+              Contact / Open channel
             </p>
-            <p className="font-mono text-[10px] uppercase tracking-[0.14em]">
-              © {new Date().getFullYear()} Julian Tiqui
-            </p>
-          </div>
+            <div className="mt-6 flex flex-col items-start justify-between gap-10 border-b border-white/[0.1] pb-12 lg:flex-row lg:items-end">
+              <h2 className="max-w-4xl text-[clamp(3rem,7vw,6.6rem)] font-semibold leading-[0.88] tracking-[-0.07em] text-white">
+                Let&apos;s build
+                <br />
+                <span className="text-white/42">what&apos;s next.</span>
+              </h2>
+              <a
+                href="#home"
+                className={`${secondaryButtonClass} shrink-0`}
+              >
+                Back to top
+                <span aria-hidden="true">↑</span>
+              </a>
+            </div>
+            <div className="flex flex-col gap-5 pt-7 text-sm text-white/52 sm:flex-row sm:items-center sm:justify-between">
+              <a
+                className={`${wordmarkClass} w-fit text-white/78 transition hover:text-white`}
+                href="#home"
+                aria-label="juliantiqui, back to home"
+              >
+                juliantiqui<span className="text-[#ff754d]">.</span>
+              </a>
+              <p>
+                Open to conversations about AI, autonomy, and engineering · Contact
+                links coming soon
+              </p>
+              <p className="font-mono text-[10px] uppercase tracking-[0.14em]">
+                © {new Date().getFullYear()} Julian Tiqui
+              </p>
+            </div>
+          </GlassCard>
         </div>
       </footer>
     </>
